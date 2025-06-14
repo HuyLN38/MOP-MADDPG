@@ -223,6 +223,7 @@ class TrafficEnv:
     def get_reward(self):
         reward_normal = []
         for i, intersection_ID in enumerate(traci.trafficlight.getIDList()):
+            total_reward = 0.0
             emergency_count, emergency_waiting, emergency_speed = self._get_emergency_metrics(intersection_ID)
             current_queue = self._get_queue_length(intersection_ID)
             current_waiting_time = self._get_total_waiting_time(intersection_ID)
@@ -237,14 +238,13 @@ class TrafficEnv:
                 max_speed = 60.0
                 emergency_speed_penalty = -2.0 * (max_speed - emergency_speed) if emergency_speed < max_speed else 0
                 queue_penalty = -0.05 * current_queue  # Small penalty to avoid extreme congestion
-                total_reward = emergency_waiting_penalty + emergency_speed_penalty + queue_penalty
+                total_reward += emergency_waiting_penalty + emergency_speed_penalty + queue_penalty
             else:
                 queue_reward = 0.5 * queue_change
                 waiting_time_reward = 0.01 * waiting_time_change
                 queue_penalty = -0.2 * current_queue
-                total_reward =  queue_reward + waiting_time_reward + queue_penalty
+                total_reward +=  queue_reward + waiting_time_reward + queue_penalty
 
-            total_reward = np.clip(total_reward, -200, 50)
             reward_normal.append(total_reward)
 
         return np.array(reward_normal), np.array([0.0] * len(reward_normal))
