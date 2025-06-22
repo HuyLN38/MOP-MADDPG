@@ -12,8 +12,9 @@ def update_model(source, target, tau):
         target_param.data.copy_(tau * source_param.data + (1.0 - tau) * target_param.data)
 
 class Actor(nn.Module):
-    def __init__(self, obs_dim, action_dim, hidden=[64 for _ in range(2)]):
+    def __init__(self, obs_dim, action_dim, hidden=[64 for _ in range(2)], device=None):
         super(Actor, self).__init__()
+        self.device = device if device is not None else torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.layers = nn.ModuleList()
         input_dims = [obs_dim] + hidden
         output_dims = hidden + [action_dim]
@@ -21,14 +22,18 @@ class Actor(nn.Module):
             self.layers.append(nn.Linear(in_dim, out_dim))
             self.layers.append(nn.LeakyReLU())
         self.layers.append(nn.Linear(input_dims[-1], output_dims[-1]))
+        self.to(self.device)
+
     def forward(self, x):
+        x = x.to(self.device)
         for layer in self.layers:
             x = layer(x)
         return F.softmax(x, dim=-1)
 
 class Critic(nn.Module):
-    def __init__(self, state_dim, action_dim, output_dim=1, hidden=[64 for _ in range(2)]):
+    def __init__(self, state_dim, action_dim, output_dim=1, hidden=[64 for _ in range(2)], device=None):
         super(Critic, self).__init__()
+        self.device = device if device is not None else torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.layers = nn.ModuleList()
         input_dims = [state_dim + action_dim] + hidden
         output_dims = hidden + [output_dim]
@@ -36,7 +41,11 @@ class Critic(nn.Module):
             self.layers.append(nn.Linear(in_dim, out_dim))
             self.layers.append(nn.LeakyReLU())
         self.layers.append(nn.Linear(input_dims[-1], output_dims[-1]))
+        self.to(self.device)
+
     def forward(self, state, action):
+        state = state.to(self.device)
+        action = action.to(self.device)
         x = torch.cat([state, action], dim=1)
         for layer in self.layers:
             x = layer(x)
@@ -45,25 +54,28 @@ class Critic(nn.Module):
 class ReplayMemory:
     def __init__(self, capacity):
         self.memory = deque(maxlen=capacity)
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
     def __len__(self):
         return len(self.memory)
+
     def push(self, transition):
         self.memory.append(transition)
+
     def sample(self, batch_size):
         transitions = random.sample(self.memory, batch_size)
         states, actions, next_states, rewards, dones = zip(*transitions)
-        states = np.vstack(states)
-        actions = np.vstack(actions)
-        next_states = np.vstack(next_states)
-        rewards = np.vstack(rewards)
-        dones = np.vstack(dones)
-        return (torch.tensor(states, dtype=torch.float32), torch.tensor(actions, dtype=torch.float32),
-                torch.tensor(next_states, dtype=torch.float32), torch.tensor(rewards, dtype=torch.float32),
-                torch.tensor(dones, dtype=torch.float32))
+        states = torch.tensor(np.vstack(states), dtype=torch.float32).to(self.device)
+        actions = torch.tensor(np.vstack(actions), dtype=torch.float32).to(self.device)
+        next_states = torch.tensor(np.vstack(next_states), dtype=torch.float32).to(self.device)
+        rewards = torch.tensor(np.vstack(rewards), dtype=torch.float32).to(self.device)
+        dones = torch.tensor(np.vstack(dones), dtype=torch.float32).to(self.device)
+        return states, actions, next_states, rewards, dones
 
 class MADDPG(nn.Module):
     def __init__(self, n_agents, obs_dims, action_dim, lr=1e-4, gamma=0.95, batch_size=64, tau=1e-3):
         super(MADDPG, self).__init__()
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.n_agents = n_agents
         self.obs_dims = obs_dims
         self.action_dim = action_dim
@@ -73,24 +85,25 @@ class MADDPG(nn.Module):
         self.tau = tau
         self.init_actors()
         self.init_critics()
-        self.mse_loss = nn.MSELoss()
         self.init_optimizers()
+        self.mse_loss = nn.MSELoss()
         self.memory = ReplayMemory(capacity=2000000)
         self.eps = 0.9
         self.eps_decay = 0.9993
         self.eps_threshold = 0.01
         self.step = 0
+        self.to(self.device)
 
     def init_actors(self):
-        self.actors = nn.ModuleList([Actor(self.obs_dims[i], self.action_dim) for i in range(self.n_agents)])
-        self.target_actors = nn.ModuleList([Actor(self.obs_dims[i], self.action_dim) for i in range(self.n_agents)])
+        self.actors = nn.ModuleList([Actor(self.obs_dims[i], self.action_dim, device=self.device) for i in range(self.n_agents)])
+        self.target_actors = nn.ModuleList([Actor(self.obs_dims[i], self.action_dim, device=self.device) for i in range(self.n_agents)])
         for i in range(self.n_agents):
             update_model(self.actors[i], self.target_actors[i], tau=1.0)
 
     def init_critics(self):
         total_obs_dim = sum(self.obs_dims)
-        self.critics = nn.ModuleList([Critic(total_obs_dim, self.action_dim * self.n_agents) for _ in range(self.n_agents)])
-        self.target_critics = nn.ModuleList([Critic(total_obs_dim, self.action_dim * self.n_agents) for _ in range(self.n_agents)])
+        self.critics = nn.ModuleList([Critic(total_obs_dim, self.action_dim * self.n_agents, device=self.device) for _ in range(self.n_agents)])
+        self.target_critics = nn.ModuleList([Critic(total_obs_dim, self.action_dim * self.n_agents, device=self.device) for _ in range(self.n_agents)])
         for i in range(self.n_agents):
             update_model(self.critics[i], self.target_critics[i], tau=1.0)
 
@@ -99,20 +112,19 @@ class MADDPG(nn.Module):
         self.critic_optimizers = [optim.Adam(self.critics[i].parameters(), lr=self.lr_base) for i in range(self.n_agents)]
 
     def set_lr(self, is_emergency, episode):
-        lr = self.lr_base * 0.5 if is_emergency else self.lr_base * 1.5  # 5e-5 khi khẩn cấp, 1.5e-4 khi bình thường
-        lr = lr - max(0, episode/500 * (self.lr_base))
+        lr = self.lr_base
         for optimizer in self.actor_optimizers + self.critic_optimizers:
             for param_group in optimizer.param_groups:
                 param_group['lr'] = lr
 
     def select_action(self, obs, i):
-        obs = torch.from_numpy(obs).float()
+        obs = torch.from_numpy(obs).float().to(self.device)
         if random.random() < self.eps:
             action = np.random.randint(self.action_dim)
             action_prob = np.zeros(self.action_dim)
             action_prob[action] = 1.0
         else:
-            action_prob = self.actors[i](obs).detach().numpy()
+            action_prob = self.actors[i](obs).detach().cpu().numpy()
             action = np.argmax(action_prob)
         return action, action_prob
 
@@ -163,10 +175,21 @@ class MADDPG(nn.Module):
         update_model(self.critics[i], self.target_critics[i], self.tau)
         return policy_loss.item(), value_loss.item()
 
-    def update_eps(self):
+    def update_eps(self, episode):
         self.step += 1
-        if self.step % 100 == 0:
-            self.eps = max(0.15, self.eps * 0.995)
+        if episode < 250:
+            if self.step % 250 == 0:
+                self.eps = max(0.01, self.eps * 0.995)
+        else:
+            self.eps = 0
+
+    def update_eps_emergency(self, episode):
+        self.step += 1
+        if episode < 250:
+            if self.step % 250 == 0:
+                self.eps = max(0.05, self.eps * 0.995)
+        else:
+            self.eps = 0
 
     def save_model(self, file_name):
         torch.save(self.state_dict(), file_name)
