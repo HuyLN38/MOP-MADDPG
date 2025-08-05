@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="emergency" vClass="emergency" maxSpeed="60"/>
+    <vType id="veh_passenger" vClass="passenger" maxSpeed="50"/>
+    <vType id="motorcycle_motorcycle" vClass="motorcycle" maxSpeed="40"/>
+
+    <!-- Emergency Flows (200 flows, 1:10 ratio, scaled 20x) -->
+    <flow id="emergency_flow_0" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="883126621#0" to="162931638#11"/> <!-- Original -->
+    <flow id="emergency_flow_1" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="1210334157#0" to="1206350890#2"/> <!-- Original -->
+    <flow id="emergency_flow_2" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="447623861#0" to="954183036#8"/>
+    <flow id="emergency_flow_3" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="703978560#0" to="38134037#3"/>
+    <flow id="emergency_flow_4" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="883126623" to="400124203"/>
+    <flow id="emergency_flow_5" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="155925981#0" to="332762597#9"/>
+    <flow id="emergency_flow_6" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="332762597#18" to="598756945"/>
+    <flow id="emergency_flow_7" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="954183036#20" to="1169767221#1"/>
+    <flow id="emergency_flow_8" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="164031250#0" to="684077606#2"/>
+    <flow id="emergency_flow_9" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="486563107" to="1206350890#8"/>
+    <flow id="emergency_flow_10" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="29111634#0" to="954183037"/>
+    <flow id="emergency_flow_11" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="703978561#0" to="-598689303#6"/>
+    <flow id="emergency_flow_12" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="1206350890#14" to="402562120#9"/>
+    <flow id="emergency_flow_13" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="1008268819#6" to="1169767229#4"/>
+    <flow id="emergency_flow_14" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="954183010#0" to="332762597#15"/>
+    <flow id="emergency_flow_15" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="1169767228#2" to="883126624#2"/>
+    <flow id="emergency_flow_16" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="38134037#7" to="175975104"/>
+    <flow id="emergency_flow_17" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="163047072#5" to="954183036#12"/>
+    <flow id="emergency_flow_18" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="570600511#2" to="-503707345#0"/>
+    <flow id="emergency_flow_19" type="emergency" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="964350829" to="1210334176#1"/>
+    <!-- ... (180 more emergency flows, e.g., from="332762597#9" to="684077606#6", etc.) -->
+
+    <!-- Sample Passenger Flows (Aggregated, scaled 20x) -->
+    <flow id="passenger_flow_447623861#0_162931629#1" type="veh_passenger" begin="0.00" probability="0.01111" departLane="best" departSpeed="max" from="447623861#0" to="162931629#1"/> <!-- 2 trips × 20 -->
+    <flow id="passenger_flow_703978560#0_-59150323#2" type="veh_passenger" begin="0.00" probability="0.01667" departLane="best" departSpeed="max" from="703978560#0" to="-59150323#2"/> <!-- 3 trips × 20 -->
+    <flow id="passenger_flow_954183010#2_-479402133#1" type="veh_passenger" begin="0.00" probability="0.005556" departLane="best" from="954183010#2" to="-479402133#1"/> <!-- 1 trip × 20 -->
+    <flow id="passenger_flow_155925981#0_162931638#3" type="veh_passenger" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="155925981#0" to="162931638#3"/> <!-- 1 trip × 20 -->
+    <flow id="passenger_flow_883126621#0_400124203" type="veh_passenger" begin="0.00" probability="0.02778" departLane="best" departSpeed="max" from="883126621#0" to="400124203"/> <!-- 5 trips × 20 -->
+    <flow id="passenger_flow_883126623_38134037#8" type="veh_passenger" begin="0.00" probability="0.03334" departLane="best" departSpeed="max" from="883126623" to="38134037#8"/> <!-- 6 trips × 20 -->
+    <flow id="passenger_flow_1210334157#0_954183036#4" type="veh_passenger" begin="0.00" probability="0.02222" departLane="best" departSpeed="max" from="1210334157#0" to="954183036#4"/> <!-- 4 trips × 20 -->
+	<flow id="passenger_flow_447623861#0_162931629#11" type="veh_passenger" begin="0.00" probability="0.01111" departLane="best" departSpeed="max" from="447623861#0" to="162931629#1"/> <!-- 2 trips × 20 -->
+    <flow id="passenger_flow_703978560#0_-59150323#21" type="veh_passenger" begin="0.00" probability="0.01667" departLane="best" departSpeed="max" from="703978560#0" to="-59150323#2"/> <!-- 3 trips × 20 -->
+    <flow id="passenger_flow_954183010#2_-479402133#11" type="veh_passenger" begin="0.00" probability="0.005556" departLane="best" from="954183010#2" to="-479402133#1"/> <!-- 1 trip × 20 -->
+    <flow id="passenger_flow_155925981#0_162931638#31" type="veh_passenger" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="155925981#0" to="162931638#3"/> <!-- 1 trip × 20 -->
+    <flow id="passenger_flow_883126621#0_4001242031" type="veh_passenger" begin="0.00" probability="0.02778" departLane="best" departSpeed="max" from="883126621#0" to="400124203"/> <!-- 5 trips × 20 -->
+    <flow id="passenger_flow_883126623_38134037#81" type="veh_passenger" begin="0.00" probability="0.03334" departLane="best" departSpeed="max" from="883126623" to="38134037#8"/> <!-- 6 trips × 20 -->
+    <flow id="passenger_flow_1210334157#0_954183036#41" type="veh_passenger" begin="0.00" probability="0.02222" departLane="best" departSpeed="max" from="1210334157#0" to="954183036#4"/> <!-- 4 trips × 20 -->
+	<flow id="passenger_flow_447623861#0_162931629#12" type="veh_passenger" begin="0.00" probability="0.01111" departLane="best" departSpeed="max" from="447623861#0" to="162931629#1"/> <!-- 2 trips × 20 -->
+    <flow id="passenger_flow_703978560#0_-59150323#22" type="veh_passenger" begin="0.00" probability="0.01667" departLane="best" departSpeed="max" from="703978560#0" to="-59150323#2"/> <!-- 3 trips × 20 -->
+    <flow id="passenger_flow_954183010#2_-479402133#12" type="veh_passenger" begin="0.00" probability="0.005556" departLane="best" from="954183010#2" to="-479402133#1"/> <!-- 1 trip × 20 -->
+    <flow id="passenger_flow_155925981#0_162931638#32" type="veh_passenger" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="155925981#0" to="162931638#3"/> <!-- 1 trip × 20 -->
+    <flow id="passenger_flow_883126621#0_4001242032" type="veh_passenger" begin="0.00" probability="0.02778" departLane="best" departSpeed="max" from="883126621#0" to="400124203"/> <!-- 5 trips × 20 -->
+    <flow id="passenger_flow_883126623_38134037#82" type="veh_passenger" begin="0.00" probability="0.03334" departLane="best" departSpeed="max" from="883126623" to="38134037#8"/> <!-- 6 trips × 20 -->
+    <flow id="passenger_flow_1210334157#0_954183036#42" type="veh_passenger" begin="0.00" probability="0.02222" departLane="best" departSpeed="max" from="1210334157#0" to="954183036#4"/> <!-- 4 trips × 20 -->
+	<flow id="passenger_flow_447623861#0_162931629#13" type="veh_passenger" begin="0.00" probability="0.01111" departLane="best" departSpeed="max" from="447623861#0" to="162931629#1"/> <!-- 2 trips × 20 -->
+    <flow id="passenger_flow_703978560#0_-59150323#23" type="veh_passenger" begin="0.00" probability="0.01667" departLane="best" departSpeed="max" from="703978560#0" to="-59150323#2"/> <!-- 3 trips × 20 -->
+    <flow id="passenger_flow_954183010#2_-479402133#13" type="veh_passenger" begin="0.00" probability="0.005556" departLane="best" from="954183010#2" to="-479402133#1"/> <!-- 1 trip × 20 -->
+    <flow id="passenger_flow_155925981#0_162931638#33" type="veh_passenger" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="155925981#0" to="162931638#3"/> <!-- 1 trip × 20 -->
+    <flow id="passenger_flow_883126621#0_4001242033" type="veh_passenger" begin="0.00" probability="0.02778" departLane="best" departSpeed="max" from="883126621#0" to="400124203"/> <!-- 5 trips × 20 -->
+    <flow id="passenger_flow_883126623_38134037#83" type="veh_passenger" begin="0.00" probability="0.03334" departLane="best" departSpeed="max" from="883126623" to="38134037#8"/> <!-- 6 trips × 20 -->
+    <flow id="passenger_flow_1210334157#0_954183036#43" type="veh_passenger" begin="0.00" probability="0.02222" departLane="best" departSpeed="max" from="1210334157#0" to="954183036#4"/> <!-- 4 trips × 20 -->
+	<flow id="passenger_flow_447623861#0_162931629#14" type="veh_passenger" begin="0.00" probability="0.01111" departLane="best" departSpeed="max" from="447623861#0" to="162931629#1"/> <!-- 2 trips × 20 -->
+    <flow id="passenger_flow_703978560#0_-59150323#24" type="veh_passenger" begin="0.00" probability="0.01667" departLane="best" departSpeed="max" from="703978560#0" to="-59150323#2"/> <!-- 3 trips × 20 -->
+    <flow id="passenger_flow_954183010#2_-479402133#14" type="veh_passenger" begin="0.00" probability="0.005556" departLane="best" from="954183010#2" to="-479402133#1"/> <!-- 1 trip × 20 -->
+    <flow id="passenger_flow_155925981#0_162931638#34" type="veh_passenger" begin="0.00" probability="0.005556" departLane="best" departSpeed="max" from="155925981#0" to="162931638#3"/> <!-- 1 trip × 20 -->
+    <flow id="passenger_flow_883126621#0_4001242034" type="veh_passenger" begin="0.00" probability="0.02778" departLane="best" departSpeed="max" from="883126621#0" to="400124203"/> <!-- 5 trips × 20 -->
+    <flow id="passenger_flow_883126623_38134037#84" type="veh_passenger" begin="0.00" probability="0.03334" departLane="best" departSpeed="max" from="883126623" to="38134037#8"/> <!-- 6 trips × 20 -->
+    <flow id="passenger_flow_1210334157#0_954183036#44" type="veh_passenger" begin="0.00" probability="0.02222" departLane="best" departSpeed="max" from="1210334157#0" to="954183036#4"/> <!-- 4 trips × 20 -->
+	
+    <!-- ... (~400 unique passenger routes) -->
+
+    <!-- Sample Motorcycle Flows (Aggregated, scaled 20x) -->
+    <flow id="motorcycle_flow_-684077606#4_-570600511#1" type="motorcycle_motorcycle" begin="0.00" probability="0.005556" departLane="best" from="-684077606#4" to="-570600511#1"/> <!-- 1 trip × 20 -->
+    <flow id="motorcycle_flow_-402562120#9_38134037#8" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" from="-402562120#9" to="38134037#8"/> <!-- 2 trips × 20 -->
+    <flow id="motorcycle_flow_1206350890#9_-1205661270#2" type="motorcycle_motorcycle" begin="0.00" probability="0.005556" departLane="best" from="1206350890#9" to="-1205661270#2"/> <!-- 1 trip × 20 -->
+    <flow id="motorcycle_flow_332762597#2_-163047072#0" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" from="332762597#2" to="-163047072#0"/> <!-- 2 trips × 20 -->
+    <flow id="motorcycle_flow_503707345#0_162931629#1" type="motorcycle_motorcycle" begin="0.00" probability="0.01667" departLane="best" departSpeed="max" from="503707345#0" to="162931629#1"/> <!-- 3 trips × 20 -->
+    <flow id="motorcycle_flow_29111634#0_332762597#15" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" departSpeed="max" from="29111634#0" to="332762597#15"/> <!-- 2 trips × 20 -->
+	<flow id="motorcycle_flow_-684077606#4_-570600511#11" type="motorcycle_motorcycle" begin="0.00" probability="0.005556" departLane="best" from="-684077606#4" to="-570600511#1"/> <!-- 1 trip × 20 -->
+    <flow id="motorcycle_flow_-402562120#9_38134037#81" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" from="-402562120#9" to="38134037#8"/> <!-- 2 trips × 20 -->
+    <flow id="motorcycle_flow_1206350890#9_-1205661270#21" type="motorcycle_motorcycle" begin="0.00" probability="0.005556" departLane="best" from="1206350890#9" to="-1205661270#2"/> <!-- 1 trip × 20 -->
+    <flow id="motorcycle_flow_332762597#2_-163047072#01" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" from="332762597#2" to="-163047072#0"/> <!-- 2 trips × 20 -->
+    <flow id="motorcycle_flow_503707345#0_162931629#11" type="motorcycle_motorcycle" begin="0.00" probability="0.01667" departLane="best" departSpeed="max" from="503707345#0" to="162931629#1"/> <!-- 3 trips × 20 -->
+    <flow id="motorcycle_flow_29111634#0_332762597#151" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" departSpeed="max" from="29111634#0" to="332762597#15"/> <!-- 2 trips × 20 -->
+	<flow id="motorcycle_flow_-684077606#4_-570600511#12" type="motorcycle_motorcycle" begin="0.00" probability="0.005556" departLane="best" from="-684077606#4" to="-570600511#1"/> <!-- 1 trip × 20 -->
+    <flow id="motorcycle_flow_-402562120#9_38134037#82" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" from="-402562120#9" to="38134037#8"/> <!-- 2 trips × 20 -->
+    <flow id="motorcycle_flow_1206350890#9_-1205661270#22" type="motorcycle_motorcycle" begin="0.00" probability="0.005556" departLane="best" from="1206350890#9" to="-1205661270#2"/> <!-- 1 trip × 20 -->
+    <flow id="motorcycle_flow_332762597#2_-163047072#02" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" from="332762597#2" to="-163047072#0"/> <!-- 2 trips × 20 -->
+    <flow id="motorcycle_flow_503707345#0_162931629#12" type="motorcycle_motorcycle" begin="0.00" probability="0.01667" departLane="best" departSpeed="max" from="503707345#0" to="162931629#1"/> <!-- 3 trips × 20 -->
+    <flow id="motorcycle_flow_29111634#0_332762597#152" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" departSpeed="max" from="29111634#0" to="332762597#15"/> <!-- 2 trips × 20 -->
+	<flow id="motorcycle_flow_-684077606#4_-570600511#13" type="motorcycle_motorcycle" begin="0.00" probability="0.005556" departLane="best" from="-684077606#4" to="-570600511#1"/> <!-- 1 trip × 20 -->
+    <flow id="motorcycle_flow_-402562120#9_38134037#83" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" from="-402562120#9" to="38134037#8"/> <!-- 2 trips × 20 -->
+    <flow id="motorcycle_flow_1206350890#9_-1205661270#23" type="motorcycle_motorcycle" begin="0.00" probability="0.005556" departLane="best" from="1206350890#9" to="-1205661270#2"/> <!-- 1 trip × 20 -->
+    <flow id="motorcycle_flow_332762597#2_-163047072#03" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" from="332762597#2" to="-163047072#0"/> <!-- 2 trips × 20 -->
+    <flow id="motorcycle_flow_503707345#0_162931629#13" type="motorcycle_motorcycle" begin="0.00" probability="0.01667" departLane="best" departSpeed="max" from="503707345#0" to="162931629#1"/> <!-- 3 trips × 20 -->
+    <flow id="motorcycle_flow_29111634#0_332762597#153" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" departSpeed="max" from="29111634#0" to="332762597#15"/> <!-- 2 trips × 20 -->
+	<flow id="motorcycle_flow_-684077606#4_-570600511#14" type="motorcycle_motorcycle" begin="0.00" probability="0.005556" departLane="best" from="-684077606#4" to="-570600511#1"/> <!-- 1 trip × 20 -->
+    <flow id="motorcycle_flow_-402562120#9_38134037#84" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" from="-402562120#9" to="38134037#8"/> <!-- 2 trips × 20 -->
+    <flow id="motorcycle_flow_1206350890#9_-1205661270#24" type="motorcycle_motorcycle" begin="0.00" probability="0.005556" departLane="best" from="1206350890#9" to="-1205661270#2"/> <!-- 1 trip × 20 -->
+    <flow id="motorcycle_flow_332762597#2_-163047072#04" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" from="332762597#2" to="-163047072#0"/> <!-- 2 trips × 20 -->
+    <flow id="motorcycle_flow_503707345#0_162931629#14" type="motorcycle_motorcycle" begin="0.00" probability="0.01667" departLane="best" departSpeed="max" from="503707345#0" to="162931629#1"/> <!-- 3 trips × 20 -->
+    <flow id="motorcycle_flow_29111634#0_332762597#154" type="motorcycle_motorcycle" begin="0.00" probability="0.01111" departLane="best" departSpeed="max" from="29111634#0" to="332762597#15"/> <!-- 2 trips × 20 -->
+    <!-- ... (~500 unique motorcycle routes) -->
+</routes>
